@@ -92,7 +92,9 @@ public class NodeInfoGather
 
 	/**
 	 * Create a sensor data object, with the information polled from the sensor
-	 * @param _sensorAddress 
+	 * @param _sensorAddress: the IP address
+	 * @param gatheredData 	: list with the data collected from the sensor
+	 * 
 	 */
 	private SensorData fillSensorData(String _sensorAddress, ArrayList<String> gatheredData)
 	{
