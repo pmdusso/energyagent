@@ -51,6 +51,11 @@ public class SensorParser
 					null, e);
 		}
 	}
+	//TODO: REMOVE
+	public SensorParser()
+	{
+		//mock constructor to debug without sensor
+	}
 
 	/**
 	 * Return the sensored data.

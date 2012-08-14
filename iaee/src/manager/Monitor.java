@@ -6,55 +6,38 @@ import java.net.Socket;
 import java.util.logging.Logger;
 
 import storage.HistoricalDatabase;
+import utils.Symbols;
 import utils.Utils;
 
 /**
  * 
  * @author pmdusso
  */
-public class Monitor
-{
+public class Monitor {
 
 	private static final int GATHER_INTERVAL = 5000;
 
-	public static void main(String[] args) throws IOException
-	{
-		if (args.length < 1 || args.length > 4)
-		{
+	public static void main(String[] args) throws IOException {
+		if (args.length < 1 || args.length > 4) {
 			System.out.println("Use:");
 			System.out.println("monitor -m <PORT> para rodar MonitoringMaster");
 			System.out
 					.println("monitor -c <PORT> <SERVER_ADDRESS> para rodar MonitoringClient sem sensor");
 			System.out
-					.println("monitor -c <PORT> <SERVER_ADDRESS> <SENSOR_ADDRESS> <CHANNELS> para rodar MonitoringClient com sensor");
-		} else
-		{
+					.println("monitor -c <PORT> <SERVER_ADDRESS> <SENSOR_ADDRESS> para rodar MonitoringClient com sensor");
+		} else {
 			if (args[0].equals("-m"))
 				startMonitoringMasterService(getServerPortFromArgs(args[1]));
 			else if (args[0].equals("-c"))
 				startMonitoringClientService(getServerAddressFromArgs(args[2]),
 						getServerPortFromArgs(args[1]),
-						getSensorAddressFromArgs(args[3]),
-						getSensorNumberOfChannels(args[4]));
+						args.length > 2 ? getSensorAddressFromArgs(args[3]) : Symbols.EMPTY);
 			System.out.println("Press Control-C to stop.");
 		}
 	}
 
-	private static int getSensorNumberOfChannels(String _channels)
-	{
-		if (!Utils.stringNotEmpty(_channels))
-		{
-			System.out
-					.println("No specific number of channels received. Using default value 4.");
-			return 4;
-		} else
-			return Integer.parseInt(_channels);
-	}
-
-	private static String getSensorAddressFromArgs(String _sensorAddress)
-	{
-		if (!Utils.stringNotEmpty(_sensorAddress))
-		{
+	private static String getSensorAddressFromArgs(String _sensorAddress) {
+		if (!Utils.stringNotEmpty(_sensorAddress)) {
 			System.out
 					.println("No sensor address received. Monitoring only system usage...");
 			return null;
@@ -69,8 +52,8 @@ public class Monitor
 	 * @return
 	 * @throws IllegalArgumentException
 	 */
-	private static String getServerAddressFromArgs(String argAddress) throws IllegalArgumentException
-	{
+	private static String getServerAddressFromArgs(String argAddress)
+			throws IllegalArgumentException {
 		if (!Utils.stringNotEmpty(argAddress))
 			throw new IllegalArgumentException(
 					"Parameter: <Server Address> empty or wrong format.");
@@ -84,8 +67,8 @@ public class Monitor
 	 * @throws IllegalArgumentException
 	 * @throws NumberFormatException
 	 */
-	private static int getServerPortFromArgs(String argPort) throws IllegalArgumentException, NumberFormatException
-	{
+	private static int getServerPortFromArgs(String argPort)
+			throws IllegalArgumentException, NumberFormatException {
 		if (!Utils.stringNotEmpty(argPort))
 			throw new IllegalArgumentException(
 					"Parameter: <Server Port> empty.");
@@ -101,10 +84,11 @@ public class Monitor
 	 * @throws IllegalArgumentException
 	 * @throws NumberFormatException
 	 */
-	private static void startMonitoringClientService(String _serverAddress, int _serverPort, String _sensorAddress, int _channels) throws IllegalArgumentException, NumberFormatException
-	{
+	private static void startMonitoringClientService(String _serverAddress,
+			int _serverPort, String _sensorAddress)
+			throws IllegalArgumentException, NumberFormatException {
 		new MonitoringClient(GATHER_INTERVAL, _serverAddress, _serverPort,
-				_sensorAddress, _channels);
+				_sensorAddress);
 	}
 
 	/**
@@ -115,8 +99,8 @@ public class Monitor
 	 * @throws NumberFormatException
 	 * @throws IOException
 	 */
-	private static void startMonitoringMasterService(int _serverPort) throws IllegalArgumentException, NumberFormatException, IOException
-	{
+	private static void startMonitoringMasterService(int _serverPort)
+			throws IllegalArgumentException, NumberFormatException, IOException {
 
 		// Create a server socket to accept client connection requests
 		System.out.println("Creating master service...");
@@ -127,8 +111,7 @@ public class Monitor
 		int totalClientsConnected = 0;
 
 		// Run forever, accepting and spawning a thread for each connection
-		while (true)
-		{
+		while (true) {
 			System.out
 					.println(String
 							.format("Waiting for connections. Right now %d clients connected. ",

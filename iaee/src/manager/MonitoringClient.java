@@ -13,9 +13,9 @@ public class MonitoringClient
 {
 
 	public MonitoringClient(long _gatherInterval, String _servAddress,
-			int _servPort, String _sensorAddress, int _channels)
+			int _servPort, String _sensorAddress)
 	{
-		new Gather(this, _gatherInterval, _sensorAddress, _channels);
+		new Gather(this, _gatherInterval, _sensorAddress);
 		new Sender(this, _servAddress, _servPort);
 	}
 
@@ -67,11 +67,11 @@ class Gather implements Runnable
 	
 	long gatherInterval = 0;
 
-	Gather(MonitoringClient client, long _gatherInterval, String _sensorAddress, int _channels)
+	Gather(MonitoringClient client, long _gatherInterval, String _sensorAddress)
 	{
 		this.client = client;
 		this.gatherInterval = _gatherInterval;
-		this.gatherService = new NodeInfoGather(Utils.getNodeUUID(), _sensorAddress, _channels);
+		this.gatherService = new NodeInfoGather(Utils.getNodeUUID(), _sensorAddress);
 		new Thread(this, "Gather").start();
 	}
 
@@ -203,6 +203,7 @@ class Sender implements Runnable
 		System.out.println(tempData.getMem().toString());
 	}
 
+	@Override
 	protected void finalize() throws Throwable
 	{
 		// do finalization here

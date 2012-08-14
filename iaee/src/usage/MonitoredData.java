@@ -18,7 +18,7 @@ public class MonitoredData implements Serializable
      *
      */
 	private static final long serialVersionUID = 7909922150038205539L;
-	private int nodeID;
+	private int nodeUUID;
 	private Map<Integer, CpuData> cpu;
 	private MemData mem;
 	private Map<String, DiskData> disk;
@@ -45,7 +45,7 @@ public class MonitoredData implements Serializable
 			throw new ExceptionInInitializerError(
 					"Sensor monitored data object is null");
 
-		this.nodeID = _uuid;
+		this.nodeUUID = _uuid;
 
 		this.cpu = _cpu;
 		this.mem = _mem;
@@ -54,9 +54,9 @@ public class MonitoredData implements Serializable
 		this.sensor = _sensor;
 	}
 
-	public int getNodeID()
+	public int getNodeUUID()
 	{
-		return this.nodeID;
+		return this.nodeUUID;
 	}
 
 	/**
