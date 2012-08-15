@@ -1,5 +1,7 @@
 package usage;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 
 /**
@@ -9,42 +11,46 @@ import java.io.Serializable;
 public class NetworkData implements Serializable {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -4583951425149974664L;
+     *
+     */
+    private static final long serialVersionUID = -4583951425149974664L;
 
-	public NetworkData(String interfaceName,
-            long rXBytes,
-            int rXPackets,
-            int rXErros,
-            int rXDropped,
-            int rXFifo,
-            int rXFrame,
-            int rXCompressed,
-            int rXMulticast,
-            long tXBytes,
-            int tXPackets,
-            int tXErros,
-            int tXDropped,
-            int tXFifo,
-            int tXCollisions,
-            int tXCarrierErrors,
-            int tXCompressed) {
+    public NetworkData(String interfaceName,
+                       long rXBytes,
+                       int rXPackets,
+                       int rXErros,
+                       int rXDropped,
+                       int rXFifo,
+                       int rXFrame,
+                       int rXCompressed,
+                       int rXMulticast,
+                       long tXBytes,
+                       int tXPackets,
+                       int tXErros,
+                       int tXDropped,
+                       int tXFifo,
+                       int tXCollisions,
+                       int tXCarrierErrors,
+                       int tXCompressed) {
 
         InterfaceName = interfaceName;
         m_receive = new Receive(rXBytes, rXPackets, rXErros, rXDropped, rXFifo, rXFrame, rXCompressed, rXMulticast);
         m_transmit = new Transmit(tXBytes, tXPackets, tXErros, tXDropped, tXFifo, tXCollisions, tXCarrierErrors, tXCompressed);
 
     }
-    private String InterfaceName;
-    private Receive m_receive;
-    private Transmit m_transmit;
+
+    private final String InterfaceName;
+    @NotNull
+    private final Receive m_receive;
+    @NotNull
+    private final Transmit m_transmit;
 
     /**
      * INTERFACE, R_BYTES, R_PACKETS, R_ERRORS, R_DROP, R_FIFO, R_FRAME,
      * R_COMPRESSED, R_MULTICAST, T_BYTES, T_PACKETS, T_ERRORS, T_DROP, T_FIFO,
      * T_COLLS, T_CARRIER, T_COMPRESSED
      */
+    @NotNull
     @Override
     public String toString() {
         return "'" + InterfaceName + "'" + ", " + String.valueOf(this.m_receive.getRX_Bytes() + ", ")
@@ -75,6 +81,7 @@ public class NetworkData implements Serializable {
     /**
      * @return the m_receive
      */
+    @NotNull
     public Receive getReceive() {
         return m_receive;
     }
@@ -82,6 +89,7 @@ public class NetworkData implements Serializable {
     /**
      * @return the m_transmit
      */
+    @NotNull
     public Transmit getTransmit() {
         return m_transmit;
     }

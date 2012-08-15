@@ -1,5 +1,7 @@
 package usage;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 
 /**
@@ -9,11 +11,11 @@ import java.io.Serializable;
 public class DiskData implements Serializable {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 5394909818404147396L;
+     *
+     */
+    private static final long serialVersionUID = 5394909818404147396L;
 
-	/**
+    /**
      * @param major
      * @param minor
      * @param name
@@ -30,10 +32,10 @@ public class DiskData implements Serializable {
      * @param weightedMillisecondsDoingIO
      */
     public DiskData(String major, String minor, String name,
-            long readsCompleted, long readsMerged, long writesMerged,
-            long sectorsRead, long millisecondsReading, long writesCompleted,
-            long sectorsWritten, long millisecondsWriting, long iosInProgress,
-            long millisecondsSpentInIO, long weightedMillisecondsDoingIO) {
+                    long readsCompleted, long readsMerged, long writesMerged,
+                    long sectorsRead, long millisecondsReading, long writesCompleted,
+                    long sectorsWritten, long millisecondsWriting, long iosInProgress,
+                    long millisecondsSpentInIO, long weightedMillisecondsDoingIO) {
         this.major = major;
         this.minor = minor;
         this.name = name;
@@ -54,6 +56,7 @@ public class DiskData implements Serializable {
      * PARTITION_NAME, READS_COMPLETED, READS_MERGED, WRITES_MERGED, SECTORS_READ, MILLISECONDS_READING, WRITES_COMPLETED, SECTORS_WRITTEN,
      * MILLISECONDS_WRITING, IO_IN_PROGRESS, MILLISECONDS_SPENT_IN_IO, WEIGHTED_MILLISECONDS_DOING_IO.
      */
+    @NotNull
     @Override
     public String toString() {
         return String.valueOf("'" + this.name + "'" + ", ")
@@ -69,66 +72,67 @@ public class DiskData implements Serializable {
                 + String.valueOf(this.millisecondsSpentInIO + ", ")
                 + String.valueOf(this.weightedMillisecondsDoingIO);
     }
+
     /**
      * The major number of the devide with this partition.
      */
-    String major;
+    private final String major;
     /**
      * The minor number of the device with this partition. This serves to
      * separate the partitions into different physical devices and relates to
      * the number at the end of the name of the partition.
      */
-    String minor;
+    private final String minor;
     /**
      * The name of the partition.
      */
-    String name;
+    private final String name;
     /**
      * This is the total number of reads completed successfully.
      */
-    long readsCompleted;
+    private final long readsCompleted;
     /**
      * Reads and writes which are adjacent to each other may be merged for
      * efficiency. thus two 4K reads may become one 8K read before it is
      * ultimately handed to the disk, and so it will be counted (and queued).
      */
-    long readsMerged;
+    private final long readsMerged;
     /**
      * See numberReadsMerged documentation.
      */
-    long writesMerged;
+    private final long writesMerged;
     /**
      * This is the total number of sector read successfully.
      */
-    long sectorsRead;
+    private final long sectorsRead;
     /**
      * This is the total number of millisecoPartitionnds spent by all reads (as
      * measured from __make_request() to end_that_request_last() ).
      */
-    long millisecondsReading;
+    private final long millisecondsReading;
     /**
      * This is the total number of writes completed successfully.
      */
-    long writesCompleted;
+    private final long writesCompleted;
     /**
      * This is the total number of sectors written successfully.
      */
-    long sectorsWritten;
+    private final long sectorsWritten;
     /**
      * This is the total number of milliseconds spent by all writes (as measured
      * from __make_request() to end_that_request_last() ).
      */
-    long millisecondsWriting;
+    private final long millisecondsWriting;
     /**
      * The only field that should go to zero. Incremented as requests are given
      * to appropriate struct request_queue and decremented as they finish.
      */
-    long iosInProgress;
+    private final long iosInProgress;
     /**
      * This field increases so long as field IOs currently in progress is
      * nonzero.
      */
-    long millisecondsSpentInIO;
+    private final long millisecondsSpentInIO;
     /**
      * This field is incremented at each I/O start, I/O completion, I/O merge,
      * or read of these stats by the number of I/Os Partitionin progress times
@@ -136,7 +140,7 @@ public class DiskData implements Serializable {
      * field. This can provide an easy measure of both I/O completion time and
      * the backlog that may be accumulating.
      */
-    long weightedMillisecondsDoingIO;
+    private final long weightedMillisecondsDoingIO;
 
     public void finalize() throws Throwable {
     }

@@ -1,5 +1,7 @@
 package usage;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 
 /**
@@ -9,11 +11,11 @@ import java.io.Serializable;
 public class MemData implements Serializable {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 8926305540190678396L;
+     *
+     */
+    private static final long serialVersionUID = 8926305540190678396L;
 
-	public MemData(
+    public MemData(
             int size,
             int resident,
             int share,
@@ -46,6 +48,7 @@ public class MemData implements Serializable {
      * SIZE, RESIDENT, SHARE, TEXT, DATA, VIRTUALSIZE, RSS, RSSLIM, MEM_TOTAL,
      * MEM_USED, MEM_FREE, MEM_BUFFERS, MEM_CACHED).
      */
+    @NotNull
     @Override
     public String toString() {
         return String.valueOf(this.size + ", ")
@@ -62,22 +65,23 @@ public class MemData implements Serializable {
                 + String.valueOf(this.memBuffers + ", ")
                 + String.valueOf(this.memCached);
     }
+
     /**
      * Total number of pages of memory (total program size in kilobytes).
      */
-    int size;
+    private final int size;
     /**
      * Resident set size.
      */
-    private int resident;
+    private final int resident;
     /**
      * Number of pages of shared (mmap'd) memory
      */
-    private int share;
+    private final int share;
     /**
      * Number of pages that are code (text).
      */
-    private int text;
+    private final int text;
     /**
      * Number of library pages (unused in Linux 2.6).
      */
@@ -85,7 +89,7 @@ public class MemData implements Serializable {
     /**
      * Number of pages of data + stack.
      */
-    private int data;
+    private final int data;
     /**
      * Dirty pages (unused in Linux 2.6).
      */
@@ -93,42 +97,42 @@ public class MemData implements Serializable {
     /**
      * Virtual memory size in bytes (/proc/[pid]/stat).
      */
-    private String vsize;
+    private final String vsize;
     /**
      * Resident set number of pages the process has in real memory. This is just
      * the pages which count toward text, data, or stack space. This does not
      * include pages which have not been demand-loaded in, or which are swapped
      * out (/proc/[pid]/stat).
      */
-    private int rss;
+    private final int rss;
     /**
      * Current limit (in bytes) of the rss of the process; usually 2,147,483,647
      * (/proc/[pid]/stat).
      */
-    String rsslim;
+    private final String rsslim;
     /**
      * Total memory phisicaly instaled in the system. This is not a usage
      * information, however, can be useful to calculate metrics over the
      * process, in KB.
      */
-    private int memTotal;
+    private final int memTotal;
     /**
      * Total memory being used by the hole system, not only the WattDB process,
      * in kilobytes.
      */
-    private int memUsed;
+    private final int memUsed;
     /**
      * The amount of physical RAM, in kilobytes, left unused by the system.
      */
-    private int memFree;
+    private final int memFree;
     /**
      * The amount of physical RAM, in kilobytes, used for file buffers.
      */
-    private int memBuffers;
+    private final int memBuffers;
     /**
      * The amount of physical RAM, in kilobytes, used as cache memory.
      */
-    private int memCached;
+    private final int memCached;
 
     /**
      * @return the size

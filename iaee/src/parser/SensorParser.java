@@ -1,7 +1,9 @@
 /**
- * 
+ *
  */
 package parser;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,95 +15,84 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import utils.Symbols;
-
 /**
  * @author pmdusso
- * 
  */
-public class SensorParser
-{
-	/**
-	 * Essa classe deve conter os atributos e métodos necessários para fazer a
-	 * coleta de dados do sensor.
-	 * 
-	 * O único método publico, além do construtor, seria "gatherSensor", que
-	 * seria chamado pela classe *NodeInfoGather*.
-	 * 
-	 */
-	private Socket sensorSocket;
+public class SensorParser {
+    /**
+     * Essa classe deve conter os atributos e métodos necessários para fazer a
+     * coleta de dados do sensor.
+     * <p/>
+     * O único método publico, além do construtor, seria "gatherSensor", que
+     * seria chamado pela classe *NodeInfoGather*.
+     */
+    private Socket sensorSocket;
 
-	/*
-	 * Constructor of sensor parser.
-	 */
-	public SensorParser(String _stringAddress)
-	{
-		try
-		{
-			// Instantiate a socket with the sensor in the receive string
-			// Address and the default port
-			sensorSocket = new Socket(_stringAddress, 34318);
-		} catch (final UnknownHostException e)
-		{
-			Logger.getLogger(SensorParser.class.getName()).log(Level.SEVERE,
-					null, e);
-		} catch (final IOException e)
-		{
-			Logger.getLogger(SensorParser.class.getName()).log(Level.SEVERE,
-					null, e);
-		}
-	}
-	//TODO: REMOVE
-	public SensorParser()
-	{
-		//mock constructor to debug without sensor
-	}
+    /*
+      * Constructor of sensor parser.
+      */
+    public SensorParser(String _stringAddress) {
+        try {
+            // Instantiate a socket with the sensor in the receive string
+            // Address and the default port
+            sensorSocket = new Socket(_stringAddress, 34318);
+        } catch (@NotNull final UnknownHostException e) {
+            Logger.getLogger(SensorParser.class.getName()).log(Level.SEVERE,
+                    null, e);
+        } catch (@NotNull final IOException e) {
+            Logger.getLogger(SensorParser.class.getName()).log(Level.SEVERE,
+                    null, e);
+        }
+    }
 
-	/**
-	 * Return the sensored data.
-	 * 
-	 * @throws IOException
-	 */
-	public ArrayList<String> gatherSensor(int _numCanais) throws IOException
-	{
-		// Number of channels to be probed
-		final int numCanais = _numCanais;
+    //TODO: REMOVE
+    public SensorParser() {
+        //mock constructor to debug without sensor
+    }
 
-		sensorSocket.setKeepAlive(true);
-		final BufferedReader r = new BufferedReader(new InputStreamReader(
-				sensorSocket.getInputStream()));
+    /**
+     * Return the sensored data.
+     *
+     * @throws IOException
+     */
+    @NotNull
+    public ArrayList<String> gatherSensor(int _numCanais) throws IOException {
+        // Number of channels to be probed
+        final int numCanais = _numCanais;
 
-		final PrintWriter w = new PrintWriter(sensorSocket.getOutputStream(),
-				true);
+        sensorSocket.setKeepAlive(true);
+        final BufferedReader r = new BufferedReader(new InputStreamReader(
+                sensorSocket.getInputStream()));
 
-		// Checking if it is connected
-		System.out.println(sensorSocket.isBound());
-		System.out.println(sensorSocket.isConnected());
+        final PrintWriter w = new PrintWriter(sensorSocket.getOutputStream(),
+                true);
 
-		// Configuring the command with the number of channels
-		final String channelNumber = "00" + String.valueOf(numCanais);
-		w.println("FD0,001," + channelNumber);
+        // Checking if it is connected
+        System.out.println(sensorSocket.isBound());
+        System.out.println(sensorSocket.isConnected());
 
-		final ArrayList<String> sensoredData = new ArrayList<String>();
-		String aux = Symbols.EMPTY;
+        // Configuring the command with the number of channels
+        final String channelNumber = "00" + String.valueOf(numCanais);
+        w.println("FD0,001," + channelNumber);
 
-		while ((aux = r.readLine()) != null)
-		{
-			if (!aux.equals("E0") && !aux.equals("EA") && !aux.equals("EN"))
-			{
-				sensoredData.add(aux);
-				System.out.println(aux);
-			}
-			if (aux.equals("EN"))
-				break;
-		}
+        final ArrayList<String> sensoredData = new ArrayList<String>();
+        String aux;
 
-		return sensoredData;
-	}
+        while ((aux = r.readLine()) != null) {
+            if (!aux.equals("E0") && !aux.equals("EA") && !aux.equals("EN")) {
+                sensoredData.add(aux);
+                System.out.println(aux);
+            }
+            if (aux.equals("EN"))
+                break;
+        }
 
-	@Override
-	public void finalize() throws Throwable
-	{
-		sensorSocket.close();
-	}
+        return sensoredData;
+    }
+
+    @Override
+    public void finalize() throws Throwable {
+        sensorSocket.close();
+        super.finalize();
+    }
 }
