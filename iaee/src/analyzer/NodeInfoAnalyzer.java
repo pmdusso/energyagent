@@ -1,8 +1,12 @@
-package manager;
+package analyzer;
+
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.commons.collections.Buffer;
 import org.apache.commons.collections.buffer.CircularFifoBuffer;
-import org.jetbrains.annotations.NotNull;
+
 import parser.ProcParser;
 import usage.CpuData;
 import usage.DiskData;
@@ -10,12 +14,7 @@ import usage.MonitoredData;
 import usage.NetworkData;
 import utils.Utils;
 
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 class NodeInfoAnalyzer {
-    @NotNull
     private final Buffer bufPreviouslyData;
     private final int gatherInterval;
     private final int networkAdapterCapacity;
@@ -36,7 +35,7 @@ class NodeInfoAnalyzer {
      * @Memory: Number of reads and writes in the memory.
      */
     @SuppressWarnings("unchecked")
-    public void analyze(@NotNull MonitoredData _actualData, int _interval) {
+    public void analyze( MonitoredData _actualData, int _interval) {
         /*
            * Test if there is enough elements collected to analyze for the desired
            * interval
@@ -62,7 +61,7 @@ class NodeInfoAnalyzer {
         this.bufPreviouslyData.add(_actualData);
     }
 
-    private void printNetwork(@NotNull Map<String, NetworkData> mapActualNetwork, int _interval) {
+    private void printNetwork(Map<String, NetworkData> mapActualNetwork, int _interval) {
         Map<String, NetworkData> mapPreviouslyNetwork;
 
         mapPreviouslyNetwork = getMonitoredDataObjectForInterval(_interval)
@@ -80,7 +79,7 @@ class NodeInfoAnalyzer {
         }
     }
 
-    private String calculateNetUsage(@NotNull NetworkData networkDataActual, @NotNull NetworkData networkDataPreviously, int networkAdapterCapacity) {
+    private String calculateNetUsage(NetworkData networkDataActual, NetworkData networkDataPreviously, int networkAdapterCapacity) {
         return String
                 .valueOf((networkDataActual.getReceive().getRX_Bytes() - networkDataPreviously
                         .getReceive().getRX_Bytes()) / networkAdapterCapacity);
@@ -89,7 +88,7 @@ class NodeInfoAnalyzer {
     /*
       * Disk I/O intensity (ms doing I/O during a total ms time interval)
       */
-    private void printDisk(@NotNull Map<String, DiskData> mapActualDisk, int _interval) {
+    private void printDisk(Map<String, DiskData> mapActualDisk, int _interval) {
         Map<String, DiskData> mainDiskPreviously = getMonitoredDataObjectForInterval(
                 _interval).getDisk();
         DiskData mainDiskActual = mapActualDisk.get("sda1");
@@ -123,7 +122,7 @@ class NodeInfoAnalyzer {
      * differences, calculate the usage for the core by subtracting the idle
      * time from the total time and dividing by the total time.
      */
-    private void printCpu(@NotNull Map<Integer, CpuData> mapActualCpu, int _interval) {
+    private void printCpu(Map<Integer, CpuData> mapActualCpu, int _interval) {
         Map<Integer, CpuData> cpuPreviously = getMonitoredDataObjectForInterval(
                 _interval).getCpu();
         System.out.println("CPU Usage per core.");
@@ -142,7 +141,7 @@ class NodeInfoAnalyzer {
      *                         all cores
      * @return the usage tax value
      */
-    private String calculateCpuUsage(@NotNull Map<Integer, CpuData> mapActualCpu, @NotNull Map<Integer, CpuData> mapPreviouslyCpu, int core) {
+    private String calculateCpuUsage(Map<Integer, CpuData> mapActualCpu, Map<Integer, CpuData> mapPreviouslyCpu, int core) {
         long totalDiff;
         long idleDiff;
         totalDiff = mapActualCpu.get(core).getTotalTimes() - mapPreviouslyCpu
@@ -175,7 +174,6 @@ class NodeInfoAnalyzer {
      * This method returns the monitored data object gathered interval seconds
      * before.
      */
-    @NotNull
     private MonitoredData getMonitoredDataObjectForInterval(int interval) {
         Buffer temp = this.bufPreviouslyData;
 

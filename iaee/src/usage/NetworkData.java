@@ -1,7 +1,5 @@
 package usage;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.Serializable;
 
 /**
@@ -40,9 +38,9 @@ public class NetworkData implements Serializable {
     }
 
     private final String InterfaceName;
-    @NotNull
+    
     private final Receive m_receive;
-    @NotNull
+    
     private final Transmit m_transmit;
 
     /**
@@ -50,7 +48,7 @@ public class NetworkData implements Serializable {
      * R_COMPRESSED, R_MULTICAST, T_BYTES, T_PACKETS, T_ERRORS, T_DROP, T_FIFO,
      * T_COLLS, T_CARRIER, T_COMPRESSED
      */
-    @NotNull
+    
     @Override
     public String toString() {
         return "'" + InterfaceName + "'" + ", " + String.valueOf(this.m_receive.getRX_Bytes() + ", ")
@@ -81,7 +79,7 @@ public class NetworkData implements Serializable {
     /**
      * @return the m_receive
      */
-    @NotNull
+    
     public Receive getReceive() {
         return m_receive;
     }
@@ -89,7 +87,7 @@ public class NetworkData implements Serializable {
     /**
      * @return the m_transmit
      */
-    @NotNull
+    
     public Transmit getTransmit() {
         return m_transmit;
     }

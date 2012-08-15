@@ -1,15 +1,13 @@
 package manager;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import storage.HistoricalDatabase;
-import utils.Symbols;
-import utils.Utils;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Logger;
+
+import storage.HistoricalDatabase;
+import utils.Symbols;
+import utils.Utils;
 
 /**
  * @author pmdusso
@@ -18,7 +16,7 @@ public class Monitor {
 
     private static final int GATHER_INTERVAL = 5000;
 
-    public static void main(@NotNull String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {
         if (args.length < 1 || args.length > 4) {
             System.out.println("Use:");
             System.out.println("monitor -m <PORT> para rodar MonitoringMaster");
@@ -37,7 +35,7 @@ public class Monitor {
         }
     }
 
-    @Nullable
+    
     private static String getSensorAddressFromArgs(String _sensorAddress) {
         if (!Utils.stringNotEmpty(_sensorAddress)) {
             System.out

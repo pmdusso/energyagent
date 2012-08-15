@@ -1,26 +1,38 @@
 package manager;
 
-import org.jetbrains.annotations.NotNull;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.joda.time.DateTime;
+
 import parser.ProcParser;
 import parser.SensorParser;
-import usage.*;
+import usage.CpuData;
+import usage.DiskData;
+import usage.MemData;
+import usage.MonitoredData;
+import usage.NetworkData;
+import usage.SensorChannel;
+import usage.SensorData;
+import usage.UnityType;
+import usage.UsageType;
 import utils.Symbols;
 import utils.Utils;
-
-import java.util.*;
 
 /**
  * @author pmdusso
  */
 class NodeInfoGather {
-    @NotNull
+    
     private final ProcParser pp;
-    @NotNull
+    
     private final SensorParser sp;
     private final int uuid;
     private String sensorAddress;
-    @NotNull
+    
     private final Boolean isSensored;
 
     public NodeInfoGather(int _uuid, String _sensorAddress) {
@@ -42,8 +54,8 @@ class NodeInfoGather {
      * Creates a list of CPU objects; Each objects of this list correspond to a
      * CPU core. The first is the sum of all cores.
      */
-    @NotNull
-    private Map<Integer, CpuData> fillCpuData(@NotNull ArrayList<String> gatheredData) {
+    
+    private Map<Integer, CpuData> fillCpuData( ArrayList<String> gatheredData) {
         final Map<Integer, CpuData> c = new HashMap<Integer, CpuData>();
         final int offset = 10;
         for (int base = 0; base < gatheredData.size(); base += offset)
@@ -65,8 +77,8 @@ class NodeInfoGather {
      * Creates a list of Disk objects; Each object of this list correspond to a
      * disk physical partition.
      */
-    @NotNull
-    private Map<String, DiskData> fillDiskData(@NotNull List<String> gatheredData) {
+    
+    private Map<String, DiskData> fillDiskData( List<String> gatheredData) {
         final Map<String, DiskData> d = new HashMap<String, DiskData>();
         final int offset = 14;
         for (int base = 0; base < gatheredData.size(); base += offset)
@@ -91,8 +103,8 @@ class NodeInfoGather {
      * Creates a single Memory object corresponding to all values read from the
      * system.
      */
-    @NotNull
-    private MemData fillMemData(@NotNull List<String> gatheredData) {
+    
+    private MemData fillMemData( List<String> gatheredData) {
         final MemData m = new MemData(
                 Integer.parseInt(gatheredData.get(0)),
                 Integer.parseInt(gatheredData.get(1)),
@@ -118,8 +130,8 @@ class NodeInfoGather {
      * Creates a list of Network objects; Each object of this list correspond to
      * a network interface.
      */
-    @NotNull
-    private Map<String, NetworkData> fillNetworkData(@NotNull List<String> gatheredData) {
+    
+    private Map<String, NetworkData> fillNetworkData( List<String> gatheredData) {
         final Map<String, NetworkData> n = new HashMap<String, NetworkData>();
         final int offset = 17;
         for (int base = 0; base < gatheredData.size(); base += offset)
@@ -150,9 +162,9 @@ class NodeInfoGather {
      * @param _sensorAddress : the IP address
      * @param gatheredData   : list with the data collected from the sensor
      */
-    @NotNull
+    
     private SensorData fillSensorData(String _sensorAddress,
-                                      @NotNull ArrayList<String> gatheredData) {
+                                       ArrayList<String> gatheredData) {
         final DateTime dateComplete = new DateTime();
         final List<SensorChannel> values = new ArrayList<SensorChannel>();
 
@@ -198,7 +210,7 @@ class NodeInfoGather {
      * ATENTION: the uuid *must be* the uuid of the sensored machine,
      * not the sensor!
      */
-    @NotNull
+    
     synchronized SensorData getSensorData(String _sensorAddress) {
         // try {
         // TODO: REMOVE COMMENT
@@ -221,7 +233,7 @@ class NodeInfoGather {
      *
      * @param: uuid: universally unique identifier of the node in the cluster.
      */
-    @NotNull
+    
     public synchronized MonitoredData getSystemUsage() {
 
         SensorData sData = null;

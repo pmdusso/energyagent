@@ -1,9 +1,5 @@
 package utils;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import usage.UnityType;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,6 +12,8 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import usage.UnityType;
 
 /**
  * @author pmdusso
@@ -36,7 +34,7 @@ public enum Utils {
             final Process p = Runtime.getRuntime().exec(cmd);
             p.getInputStream().read(bo);
             return Integer.parseInt(new String(bo).trim());
-        } catch (@NotNull final IOException ex) {
+        } catch ( final IOException ex) {
             Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
         }
         return -1;
@@ -51,7 +49,7 @@ public enum Utils {
         try {
             Integer.parseInt(value);
             return true;
-        } catch (@NotNull final NumberFormatException ex) {
+        } catch ( final NumberFormatException ex) {
             return false;
         }
     }
@@ -59,7 +57,7 @@ public enum Utils {
     /**
      * Remove Null Value from String array
      */
-    public static String[] removeEmptyStringsFromArray(@NotNull String[] in) {
+    public static String[] removeEmptyStringsFromArray( String[] in) {
         final ArrayList<String> list = new ArrayList<String>();
         for (final String s : in)
             if (!s.equals(""))
@@ -74,7 +72,7 @@ public enum Utils {
      * @return True if the string is not null nor empty; false if is empty or
      *         null.
      */
-    public static boolean stringNotEmpty(@Nullable String s) {
+    public static boolean stringNotEmpty( String s) {
         return (s != null && s.length() > 0);
     }
 
@@ -88,7 +86,7 @@ public enum Utils {
         Enumeration<NetworkInterface> ifs = null;
         try {
             ifs = NetworkInterface.getNetworkInterfaces();
-        } catch (@NotNull final SocketException ex) {
+        } catch ( final SocketException ex) {
             Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (ifs != null)
@@ -139,14 +137,14 @@ public enum Utils {
                         splited = splited[1].split("G");
                     return Integer.valueOf(splited[0]);
                 }
-        } catch (@NotNull final IOException e) {
+        } catch ( final IOException e) {
             Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, e);
         }
         return -1;
     }
 
-    @Nullable
-    public static UnityType convertStringToUnity(@NotNull String u) {
+    
+    public static UnityType convertStringToUnity( String u) {
         if (u.equals(Symbols.CELCIUS))
             return UnityType.CELCIUS;
         else if (u.equals(Symbols.WATT))
@@ -163,8 +161,8 @@ public enum Utils {
             return null;
     }
 
-    @Nullable
-    public static String convertUnityToString(@NotNull UnityType u) {
+    
+    public static String convertUnityToString( UnityType u) {
         if (u.equals(UnityType.CELCIUS))
             return "CELCIUS";
         else if (u.equals(UnityType.WATT))

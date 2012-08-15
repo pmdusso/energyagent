@@ -3,8 +3,6 @@
  */
 package parser;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -36,10 +34,10 @@ public class SensorParser {
             // Instantiate a socket with the sensor in the receive string
             // Address and the default port
             sensorSocket = new Socket(_stringAddress, 34318);
-        } catch (@NotNull final UnknownHostException e) {
+        } catch ( final UnknownHostException e) {
             Logger.getLogger(SensorParser.class.getName()).log(Level.SEVERE,
                     null, e);
-        } catch (@NotNull final IOException e) {
+        } catch ( final IOException e) {
             Logger.getLogger(SensorParser.class.getName()).log(Level.SEVERE,
                     null, e);
         }
@@ -55,7 +53,7 @@ public class SensorParser {
      *
      * @throws IOException
      */
-    @NotNull
+    
     public ArrayList<String> gatherSensor(int _numCanais) throws IOException {
         // Number of channels to be probed
         final int numCanais = _numCanais;

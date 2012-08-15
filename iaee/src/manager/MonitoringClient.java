@@ -1,16 +1,14 @@
 package manager;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import usage.MonitoredData;
-import utils.Utils;
-
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import usage.MonitoredData;
+import utils.Utils;
 
 class MonitoringClient {
 
@@ -55,7 +53,7 @@ class MonitoringClient {
 class Gather implements Runnable {
 
     private final MonitoringClient client;
-    @NotNull
+    
     private final NodeInfoGather gatherService;
 
     private long gatherInterval = 0;
@@ -98,10 +96,10 @@ class Sender implements Runnable {
     private int packageCount = 0;
 
     private ObjectOutputStream oos;
-    @Nullable
+    
     private MonitoringClient client;
 
-    Sender(@Nullable MonitoringClient _client, String _server, int _servPort) {
+    Sender(MonitoringClient _client, String _server, int _servPort) {
         // check for parameters
         if (_client == null)
             throw new IllegalArgumentException(
@@ -162,7 +160,7 @@ class Sender implements Runnable {
      * @param tempData
      */
     @SuppressWarnings("unused")
-    private void printMonitoredData(@NotNull MonitoredData tempData) {
+    private void printMonitoredData(MonitoredData tempData) {
         for (int core = 0; core < tempData.getCpu().keySet().size(); core++) {
             System.out.print("CPU:");
             System.out.println(tempData.getCpu().get(core).toString());

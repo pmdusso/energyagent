@@ -1,13 +1,13 @@
 package usage;
 
-import org.jetbrains.annotations.NotNull;
-import org.joda.time.DateTime;
-import utils.Symbols;
-import utils.Utils;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.joda.time.DateTime;
+
+import utils.Symbols;
+import utils.Utils;
 
 /**
  * @author pmdusso
@@ -23,7 +23,7 @@ public class SensorData implements Serializable {
     /**
      * Construct a new Sensor Data object.
      */
-    public SensorData(@NotNull String _sensorAddress, DateTime _date,
+    public SensorData( String _sensorAddress, DateTime _date,
                       List<SensorChannel> _values) {
         this.sensorUUID = Math.abs(_sensorAddress.hashCode());
         this.date = _date;
@@ -32,17 +32,17 @@ public class SensorData implements Serializable {
 
     private final int sensorUUID;
     private final DateTime date;
-    @NotNull
+    
     private final ArrayList<SensorChannel> channels;
 
-    @NotNull
+    
     @Override
     public String toString() {
         return "SensorData [sensorUUID=" + sensorUUID + ", date=" + date
                 + ", channels=" + channelsToString() + "]";
     }
 
-    @NotNull
+    
     private String channelsToString() {
         String s = Symbols.EMPTY;
         for (SensorChannel c : this.channels) {
@@ -60,7 +60,7 @@ public class SensorData implements Serializable {
         return sensorUUID;
     }
 
-    @NotNull
+    
     public ArrayList<SensorChannel> getChannels() {
         return channels;
     }

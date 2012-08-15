@@ -1,7 +1,5 @@
 package usage;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.Serializable;
 
 /**
@@ -56,7 +54,7 @@ public class DiskData implements Serializable {
      * PARTITION_NAME, READS_COMPLETED, READS_MERGED, WRITES_MERGED, SECTORS_READ, MILLISECONDS_READING, WRITES_COMPLETED, SECTORS_WRITTEN,
      * MILLISECONDS_WRITING, IO_IN_PROGRESS, MILLISECONDS_SPENT_IN_IO, WEIGHTED_MILLISECONDS_DOING_IO.
      */
-    @NotNull
+    
     @Override
     public String toString() {
         return String.valueOf("'" + this.name + "'" + ", ")

@@ -1,17 +1,19 @@
 package parser;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import usage.UsageType;
-import utils.Symbols;
-import utils.Utils;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import usage.UsageType;
+import utils.Symbols;
+import utils.Utils;
 
 /**
  * Extract information from the process information pseudo-file system called
@@ -51,8 +53,7 @@ public class ProcParser {
      * Gathers the usage statistic from the /proc file system for CPU, Memory,
      * Disk and Network
      */
-    @Nullable
-    public ArrayList<String> gatherUsage(@Nullable UsageType uType) {
+    public ArrayList<String> gatherUsage(UsageType uType) {
         if ((uType == null) || (processPid < 0))
             throw new IllegalArgumentException();
         ArrayList<String> usageData = null;
@@ -85,7 +86,7 @@ public class ProcParser {
      * @param _memberValues
      * @throws IOException
      */
-    @NotNull
+    
     private ArrayList<String> gatherCpuUsage() {
         BufferedReader br;
         final ArrayList<String> data = new ArrayList<String>();
@@ -104,7 +105,7 @@ public class ProcParser {
                 data.addAll(Arrays.asList(tempData).subList(1, 10));
             }
             br.close();
-        } catch (@NotNull final IOException ex) {
+        } catch ( final IOException ex) {
             Logger.getLogger(ProcParser.class.getName()).log(Level.SEVERE,
                     null, ex);
         }
@@ -132,7 +133,7 @@ public class ProcParser {
      * @param _processPid
      * @param _memberValues
      */
-    @NotNull
+    
     private ArrayList<String> gatherMemoryUsage(int _processPid) {
         BufferedReader br;
         final ArrayList<String> data = new ArrayList<String>();
@@ -164,10 +165,10 @@ public class ProcParser {
                         data.add(s);
             }
             br.close();
-        } catch (@NotNull final FileNotFoundException ex) {
+        } catch ( final FileNotFoundException ex) {
             Logger.getLogger(ProcParser.class.getName()).log(Level.SEVERE,
                     null, ex);
-        } catch (@NotNull final IOException ex) {
+        } catch ( final IOException ex) {
             Logger.getLogger(ProcParser.class.getName()).log(Level.SEVERE,
                     null, ex);
         }
@@ -177,7 +178,7 @@ public class ProcParser {
     /**
      * @param _memberValues
      */
-    @NotNull
+    
     private ArrayList<String> gatherNetworkUsage() {
         final ArrayList<String> data = new ArrayList<String>();
         String[] tempData;
@@ -201,7 +202,7 @@ public class ProcParser {
     /**
      * @param _memberValues
      */
-    @NotNull
+    
     private ArrayList<String> gatherPartitionUsage() {
         final ArrayList<String> data = new ArrayList<String>();
         String[] tempData;
@@ -223,8 +224,8 @@ public class ProcParser {
       * Create a list with the partitions name to be used to find their
       * statistics in /proc/diskstats file
       */
-    @NotNull
-    private ArrayList<String> getPartitionNames(@NotNull ArrayList<String> data) {
+    
+    private ArrayList<String> getPartitionNames( ArrayList<String> data) {
 
         final ArrayList<String> partitionsName = new ArrayList<String>();
         for (final String string : data)
@@ -236,7 +237,7 @@ public class ProcParser {
     /**
      * @param _memberValues
      */
-    @NotNull
+    
     private ArrayList<String> gatherDiskUsage() {
         final ArrayList<String> partitionData = gatherPartitionUsage();
         final ArrayList<String> data = new ArrayList<String>();
@@ -297,7 +298,7 @@ public class ProcParser {
                 input.close();
 
             }
-        } catch (@NotNull final IOException ex) {
+        } catch ( final IOException ex) {
             Logger.getLogger(ProcParser.class.getName()).log(Level.SEVERE,
                     null, ex);
         }
@@ -312,7 +313,7 @@ public class ProcParser {
      * @param path is a file which already exists and can be read.
      * @throws IOException
      */
-    @Nullable
+    
     private synchronized BufferedReader getStream(String _path) {
         BufferedReader br = null;
         final File file = new File(_path);
@@ -321,7 +322,7 @@ public class ProcParser {
             fileReader = new FileReader(file);
             br = new BufferedReader(fileReader);
 
-        } catch (@NotNull final FileNotFoundException ex) {
+        } catch ( final FileNotFoundException ex) {
             Logger.getLogger(ProcParser.class.getName()).log(Level.SEVERE,
                     null, ex);
         }

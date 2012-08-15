@@ -1,18 +1,22 @@
 package storage;
 
-import org.jetbrains.annotations.NotNull;
-import org.joda.time.DateTime;
-import usage.MonitoredData;
-import usage.SensorChannel;
-import utils.Utils;
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import org.joda.time.DateTime;
+
+import usage.MonitoredData;
+import usage.SensorChannel;
+import utils.Utils;
 
 public class HistoricalDatabase {
 
@@ -33,10 +37,10 @@ public class HistoricalDatabase {
             Class.forName("org.sqlite.JDBC");
             conn = DriverManager.getConnection("jdbc:sqlite:" + file);
             initDB();
-        } catch (@NotNull final SQLException ex) {
+        } catch ( final SQLException ex) {
             Logger.getLogger(HistoricalDatabase.class.getName()).log(
                     Level.SEVERE, null, ex);
-        } catch (@NotNull final ClassNotFoundException ex) {
+        } catch ( final ClassNotFoundException ex) {
             Logger.getLogger(HistoricalDatabase.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
@@ -100,7 +104,7 @@ public class HistoricalDatabase {
                     stm.executeUpdate(query);
             }
 
-        } catch (@NotNull final SQLException ex) {
+        } catch ( final SQLException ex) {
             Logger.getLogger(HistoricalDatabase.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
@@ -121,7 +125,7 @@ public class HistoricalDatabase {
     /**
      * Adiciona uma nova linha na tabela de recordes.
      */
-    public void saveOrUpdate(@NotNull MonitoredData mData) {
+    public void saveOrUpdate( MonitoredData mData) {
 
         final String timeID = getTimeLastRowID();
         int nodeID;
@@ -232,7 +236,7 @@ public class HistoricalDatabase {
             stm = conn.createStatement();
             stm.executeUpdate(insert);
             return getLastInsertRowId();
-        } catch (@NotNull final SQLException ex) {
+        } catch ( final SQLException ex) {
             Logger.getLogger(HistoricalDatabase.class.getName()).log(
                     Level.SEVERE, null, ex);
         }
@@ -249,7 +253,7 @@ public class HistoricalDatabase {
             rs = stm.getGeneratedKeys();
             while (rs.next())
                 rowID = rs.getInt(1);
-        } catch (@NotNull final SQLException ex) {
+        } catch ( final SQLException ex) {
             Logger.getLogger(HistoricalDatabase.class.getName()).log(
                     Level.SEVERE, null, ex);
         }

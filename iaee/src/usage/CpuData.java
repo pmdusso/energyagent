@@ -1,7 +1,5 @@
 package usage;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.Serializable;
 
 /**
@@ -41,7 +39,7 @@ public class CpuData implements Serializable {
         this.guest = guest;
     }
 
-    @NotNull
+    
     @Override
     public String toString() {
         return "CpuData [load=" + load + ", coreId=" + coreId + ", guest=" + guest + ", idle=" + idle + ", iowait=" + iowait + ", irq=" + irq + ", nice=" + nice + ", softirq=" + softirq + ", steal=" + steal + ", sysmode=" + sysmode + ", user=" + user + "]";

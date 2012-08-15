@@ -1,14 +1,13 @@
 package manager;
 
-import org.jetbrains.annotations.NotNull;
-import storage.HistoricalDatabase;
-import usage.MonitoredData;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import storage.HistoricalDatabase;
+import usage.MonitoredData;
 
 class MonitoringMaster implements Runnable {
 
@@ -34,7 +33,7 @@ class MonitoringMaster implements Runnable {
         }
     }
 
-    void handleEchoClient(@NotNull Socket client) {
+    void handleEchoClient(Socket client) {
         try {
             MonitoredData mdata;
             // Receive until client closes connection
