@@ -43,9 +43,6 @@ public class MonitoredData implements Serializable {
         else if (_net == null)
             throw new ExceptionInInitializerError(
                     "Network monitored data object is null");
-        else if (_sensor == null)
-            throw new ExceptionInInitializerError(
-                    "Sensor monitored data object is null");
 
         this.nodeUUID = _uuid;
 

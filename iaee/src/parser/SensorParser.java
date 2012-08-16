@@ -43,20 +43,15 @@ public class SensorParser {
         }
     }
 
-    //TODO: REMOVE
-    public SensorParser() {
-        //mock constructor to debug without sensor
-    }
-
     /**
      * Return the sensored data.
      *
      * @throws IOException
      */
     
-    public ArrayList<String> gatherSensor(int _numCanais) throws IOException {
+    public ArrayList<String> gatherSensor() throws IOException {
         // Number of channels to be probed
-        final int numCanais = _numCanais;
+        //final int numCanais = _numCanais;
 
         sensorSocket.setKeepAlive(true);
         final BufferedReader r = new BufferedReader(new InputStreamReader(
@@ -70,7 +65,7 @@ public class SensorParser {
         System.out.println(sensorSocket.isConnected());
 
         // Configuring the command with the number of channels
-        final String channelNumber = "00" + String.valueOf(numCanais);
+        final String channelNumber = "00" + String.valueOf(12);
         w.println("FD0,001," + channelNumber);
 
         final ArrayList<String> sensoredData = new ArrayList<String>();
