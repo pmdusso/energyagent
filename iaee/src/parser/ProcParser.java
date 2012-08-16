@@ -103,8 +103,20 @@ public class ProcParser
 				data.add(String.valueOf(core));
 				tempData = Utils.removeEmptyStringsFromArray(br.readLine().split(
 						Symbols.SPACE));
-				// Adds the first 9 fields.
-				data.addAll(Arrays.asList(tempData).subList(1, 10));
+				/*
+				 * This handles the different kernel versions.
+				 * */
+				if (tempData.length >= 11)
+					data.addAll(Arrays.asList(tempData).subList(1, 10));
+				else if (tempData.length == 10){
+					data.addAll(Arrays.asList(tempData).subList(1, 9));
+					data.add("0");
+				}
+				else if (tempData.length == 9){
+					data.addAll(Arrays.asList(tempData).subList(1, 8));
+					data.add("0");
+					data.add("0");
+				}
 			}
 			br.close();
 		} catch (final IOException ex)

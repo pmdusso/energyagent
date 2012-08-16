@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -72,7 +73,7 @@ class Gather implements Runnable
 	{
 		this.client = client;
 		this.gatherInterval = _gatherInterval;
-		this.gatherService = new NodeInfoGather(Utils.getNodeUUID(),
+		this.gatherService = new NodeInfoGather(UUID.randomUUID().hashCode(),
 				_sensorAddress);
 		new Thread(this, "Gather").start();
 	}
