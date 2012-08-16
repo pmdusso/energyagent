@@ -4,12 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -78,35 +75,11 @@ public enum Utils {
 
     /**
      * Generates a universally unique identifier and return it as a int value.
-     * The UUID is obtained from the node IP address.
      *
      * @return A the absolutely value of the hash code of IP address.
      */
     public static int getNodeUUID() {
-        Enumeration<NetworkInterface> ifs = null;
-        try {
-            ifs = NetworkInterface.getNetworkInterfaces();
-        } catch ( final SocketException ex) {
-            Logger.getLogger(Utils.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if (ifs != null)
-            while (ifs.hasMoreElements()) {
-                final NetworkInterface iface = ifs.nextElement();
-                System.out.println(iface.getName());
-                final Enumeration<InetAddress> en = iface.getInetAddresses();
-                while (en.hasMoreElements()) {
-                    final InetAddress addr = en.nextElement();
-                    final String s = addr.getHostAddress();
-                    final int end = s.lastIndexOf("%");
-                    if (!addr.isLoopbackAddress() && !addr.isLinkLocalAddress())
-                        if (end > 0)
-                            System.out.println("\t" + s.substring(0, end));
-                        else
-                            // System.out.println("\t" + s);
-                            return Math.abs(s.hashCode());
-                }
-            }
-        return -1;
+    	return Math.abs(UUID.randomUUID().hashCode());
     }
 
     /**
