@@ -1,4 +1,6 @@
 bin
 .metadata
 h.db
-config.properties
+*.properties
+*~
+*jar$
