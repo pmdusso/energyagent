@@ -1,4 +1,4 @@
-package utils;
+package common;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,7 +10,6 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import usage.UnityType;
 
 /**
  * @author pmdusso

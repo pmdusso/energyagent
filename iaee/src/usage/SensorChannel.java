@@ -2,6 +2,8 @@ package usage;
 
 import java.io.Serializable;
 
+import common.UnityType;
+
 public class SensorChannel implements Serializable {
 
     /**

@@ -1,4 +1,4 @@
-package manager;
+package monitor;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,6 +7,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.joda.time.DateTime;
+
+import common.Symbols;
+import common.UnityType;
+import common.UsageType;
+import common.Utils;
 
 import parser.ProcParser;
 import parser.SensorParser;
@@ -17,10 +22,6 @@ import usage.MonitoredData;
 import usage.NetworkData;
 import usage.SensorChannel;
 import usage.SensorData;
-import usage.UnityType;
-import usage.UsageType;
-import utils.Symbols;
-import utils.Utils;
 
 /**
  * @author pmdusso

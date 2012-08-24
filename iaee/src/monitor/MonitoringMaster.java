@@ -1,4 +1,4 @@
-package manager;
+package monitor;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 import storage.HistoricalDatabase;
 import usage.MonitoredData;
 
-class MonitoringMaster implements Runnable {
+public class MonitoringMaster implements Runnable {
 
     // Socket connect to client
     private final Socket clientSock;

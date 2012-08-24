@@ -12,12 +12,16 @@ import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import java.util.ArrayList;
+
 import org.joda.time.DateTime;
 
+import common.Utils;
+
+import usage.EstimationData;
 import usage.MonitoredData;
 import usage.SensorChannel;
 import usage.SensorData;
-import utils.Utils;
 
 public class HistoricalDatabase
 {
@@ -41,14 +45,14 @@ public class HistoricalDatabase
 			Class.forName("org.sqlite.JDBC");
 			conn = DriverManager.getConnection("jdbc:sqlite:" + file);
 			initDB();
-		} catch (final SQLException ex)
+		} catch (final SQLException e)
 		{
 			Logger.getLogger(HistoricalDatabase.class.getName()).log(
-					Level.SEVERE, null, ex);
-		} catch (final ClassNotFoundException ex)
+					Level.SEVERE, e.getMessage(), e);
+		} catch (final ClassNotFoundException e)
 		{
 			Logger.getLogger(HistoricalDatabase.class.getName()).log(
-					Level.SEVERE, null, ex);
+					Level.SEVERE, e.getMessage(), e);
 		}
 	}
 
@@ -64,10 +68,10 @@ public class HistoricalDatabase
 			rs = stm.getGeneratedKeys();
 			while (rs.next())
 				rowID = rs.getInt(1);
-		} catch (final SQLException ex)
+		} catch (final SQLException e)
 		{
 			Logger.getLogger(HistoricalDatabase.class.getName()).log(
-					Level.SEVERE, null, ex);
+					Level.SEVERE, e.getMessage(), e);
 		}
 		return rowID;
 	}
@@ -133,10 +137,10 @@ public class HistoricalDatabase
 					stm.executeUpdate(query);
 			}
 
-		} catch (final SQLException ex)
+		} catch (final SQLException e)
 		{
 			Logger.getLogger(HistoricalDatabase.class.getName()).log(
-					Level.SEVERE, null, ex);
+					Level.SEVERE, e.getMessage(), e);
 		}
 	}
 
@@ -278,13 +282,30 @@ public class HistoricalDatabase
 		} catch (SQLException e)
 		{
 			Logger.getLogger(HistoricalDatabase.class.getName()).log(
-					Level.SEVERE, null, e);
+					Level.SEVERE, e.getMessage(), e);
 		} catch (Exception e)
 		{
 			Logger.getLogger(HistoricalDatabase.class.getName()).log(
-					Level.SEVERE, null, e);
+					Level.SEVERE, e.getMessage(), e);
 		}
 
+	}
+
+	public void saveOrUpdate(EstimationData eData)
+	{
+		final String timeID = getTimeLastRowID();
+		final int nodeID;
+
+		try
+		{
+			nodeID = getNodeDbId(eData.getNodeUUID());
+			
+			
+		} catch (SQLException e)
+		{
+			Logger.getLogger(HistoricalDatabase.class.getName()).log(
+					Level.SEVERE, e.getMessage(), e);
+		}
 	}
 
 	/**
@@ -339,12 +360,50 @@ public class HistoricalDatabase
 			stm = conn.createStatement();
 			stm.executeUpdate(insert);
 			return getLastInsertRowId();
-		} catch (final SQLException ex)
+		} catch (final SQLException e)
 		{
 			Logger.getLogger(HistoricalDatabase.class.getName()).log(
-					Level.SEVERE, null, ex);
+					Level.SEVERE, e.getMessage(), e);
 		}
 		return -1;
+	}
+
+	public ResultSet readFromDatabase(String query)
+	{
+		Statement select;
+		ResultSet result = null;
+		try
+		{
+			select = conn.createStatement();
+			result = select.executeQuery(query);
+		} catch (final SQLException e)
+		{
+			Logger.getLogger(HistoricalDatabase.class.getName()).log(
+					Level.SEVERE, e.getMessage(), e);
+		}
+
+		return result;
+	}
+
+	public ArrayList<String> GetNodeListFromDB()
+	{
+		ResultSet result = readFromDatabase(SqlScripts.SELECT_NODES_UUID);
+
+		ArrayList<String> tempResult = new ArrayList<String>();
+
+		try
+		{
+			while (result.next())
+			{
+				tempResult.add(result.getString(1));
+			}
+		} catch (SQLException e)
+		{
+			Logger.getLogger(HistoricalDatabase.class.getName()).log(
+					Level.SEVERE, e.getMessage(), e);
+		}
+
+		return tempResult;
 	}
 
 }

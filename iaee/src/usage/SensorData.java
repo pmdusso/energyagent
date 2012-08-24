@@ -6,8 +6,9 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
-import utils.Symbols;
-import utils.Utils;
+import common.Symbols;
+import common.Utils;
+
 
 /**
  * @author pmdusso

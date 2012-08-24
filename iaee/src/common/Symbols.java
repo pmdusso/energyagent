@@ -1,4 +1,4 @@
-package utils;
+package common;
 
 public enum Symbols {
     INSTANCE;

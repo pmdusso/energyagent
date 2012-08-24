@@ -11,9 +11,10 @@ import java.util.Collections;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import usage.UsageType;
-import utils.Symbols;
-import utils.Utils;
+import common.Symbols;
+import common.UsageType;
+import common.Utils;
+
 
 /**
  * Extract information from the process information pseudo-file system called

@@ -1,7 +1,7 @@
 /**
  *
  */
-package usage;
+package common;
 
 /**
  * @author pmdusso

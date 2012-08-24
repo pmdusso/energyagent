@@ -1,4 +1,4 @@
-package manager;
+package monitor;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -7,10 +7,11 @@ import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import usage.MonitoredData;
-import utils.Utils;
+import common.Utils;
 
-class MonitoringClient
+import usage.MonitoredData;
+
+public class MonitoringClient
 {
 
 	public MonitoringClient(long _gatherInterval, String _servAddress,
