@@ -1,2 +1,2 @@
-This energy agent is called IAEE, which stands for Inteligent Artificial Energy Estimation. It aims to estimate the
-energy comsumed by a machine based on its usage metrics.
+This energy agent is called IAEE. It aims to estimate the energy comsumed by a machine based on its usage metrics.
+This way, is not necessary to sensor a whole cluster of computers to be aware of the machine's individual power consumption. 
